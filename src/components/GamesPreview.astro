@@ -1,0 +1,58 @@
+---
+// Games preview section
+const games = [
+  {
+    title: 'Cosmic Runner',
+    description: 'A fast-paced endless runner set in a procedurally generated universe.',
+    status: 'Released',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
+  },
+  {
+    title: 'Puzzle Garden',
+    description: 'Relaxing puzzle game where you grow and arrange a beautiful garden.',
+    status: 'In Development',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
+  },
+  {
+    title: 'Dungeon Architect',
+    description: 'Build and manage your own dungeon in this strategic roguelike.',
+    status: 'Prototype',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
+  },
+];
+---
+
+<section id="games" class="py-16 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="pixel-font text-sm flex items-center gap-2">
+        <span class="text-green-600">&gt;&gt;</span> Games
+      </h2>
+      <a href="#games" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors text-sm hover:underline decoration-2 decoration-green-500">
+        View all
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {games.map((game) => (
+        <div class="group cursor-pointer">
+          <div class="aspect-video bg-slate-200 border-4 border-slate-900 overflow-hidden mb-3 pixel-border">
+            <img
+              src={game.image}
+              alt={game.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg">{game.title}</h3>
+            <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">{game.status}</span>
+          </div>
+          <p class="text-slate-600 text-sm">{game.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

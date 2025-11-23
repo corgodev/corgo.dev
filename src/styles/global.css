@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pixel/Retro Gaming Aesthetic */
+.pixel-font {
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
+
+.pixel-border {
+  box-shadow:
+    0 -2px 0 0 currentColor,
+    2px 0 0 0 currentColor,
+    0 2px 0 0 currentColor,
+    -2px 0 0 0 currentColor;
+}

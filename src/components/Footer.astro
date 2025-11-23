@@ -1,0 +1,25 @@
+---
+// Simple footer component
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-slate-900 text-slate-300 border-t-4 border-slate-900">
+  <div class="container mx-auto px-6 py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="pixel-font text-xs text-green-400">
+        &lt;/&gt; DEV_NAME
+      </div>
+
+      <div class="text-sm text-center">
+        <p>&copy; {currentYear} All rights reserved.</p>
+      </div>
+
+      <div class="flex gap-4 text-sm">
+        <a href="#games" class="hover:text-green-400 transition-colors">Games</a>
+        <a href="#projects" class="hover:text-green-400 transition-colors">Projects</a>
+        <a href="#blog" class="hover:text-green-400 transition-colors">Blog</a>
+        <a href="#contact" class="hover:text-green-400 transition-colors">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
