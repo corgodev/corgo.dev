@@ -8,6 +8,7 @@ const gamesCollection = defineCollection({
     status: z.enum(['Released', 'In Development', 'Prototype']),
     image: z.string().optional(),
     date: z.date(),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -18,6 +19,7 @@ const projectsCollection = defineCollection({
     description: z.string(),
     tech: z.array(z.string()),
     date: z.date(),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -28,6 +30,7 @@ const blogCollection = defineCollection({
     date: z.date(),
     excerpt: z.string(),
     readTime: z.string().optional(),
+    draft: z.boolean().default(false),
   }),
 });
 

@@ -2,9 +2,10 @@
 import { getCollection } from 'astro:content';
 
 // Fetch games from content collection, sorted by date (newest first)
-const games = (await getCollection('games')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+// Filter out drafts in production
+const games = (await getCollection('games', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <section id="games" class="py-16 bg-white">

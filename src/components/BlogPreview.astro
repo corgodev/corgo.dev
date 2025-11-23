@@ -2,9 +2,10 @@
 import { getCollection } from 'astro:content';
 
 // Fetch blog posts from content collection, sorted by date (newest first)
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+// Filter out drafts in production
+const posts = (await getCollection('blog', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Helper to format date
 function formatDate(date: Date) {

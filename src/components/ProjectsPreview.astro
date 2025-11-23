@@ -2,9 +2,10 @@
 import { getCollection } from 'astro:content';
 
 // Fetch projects from content collection, sorted by date (newest first)
-const projects = (await getCollection('projects')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+// Filter out drafts in production
+const projects = (await getCollection('projects', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <section id="projects" class="py-16 bg-slate-50">
