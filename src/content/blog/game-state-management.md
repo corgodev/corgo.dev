@@ -3,6 +3,7 @@ title: Understanding Game State Management
 date: 2024-11-08
 excerpt: How to effectively manage game state and avoid common pitfalls in game development.
 readTime: 7 min read
+draft: true
 ---
 
 Game state management is one of those things that seems simple until your game grows beyond a prototype. Here's what I've learned about keeping your game state clean and maintainable.

@@ -3,6 +3,7 @@ title: Optimizing 2D Sprite Rendering
 date: 2024-11-01
 excerpt: Techniques for improving performance when rendering thousands of sprites.
 readTime: 6 min read
+draft: true
 ---
 
 When you're rendering thousands of sprites every frame, performance becomes critical. Here are the techniques I use to keep framerates high.
