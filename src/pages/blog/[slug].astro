@@ -1,0 +1,273 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => {
+    // In production, only include non-draft posts
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Get all posts for prev/next navigation
+const allPosts = (await getCollection('blog', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+})).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+
+// Helper to format date
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// Get current URL for sharing
+const currentUrl = Astro.url.href;
+const encodedUrl = encodeURIComponent(currentUrl);
+const encodedTitle = encodeURIComponent(post.data.title);
+---
+
+<BaseLayout title={`${post.data.title} | Blog`} description={post.data.excerpt}>
+  <Navigation />
+
+  <main class="flex-grow">
+    <article class="py-16 bg-white">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <!-- Article Header -->
+        <header class="mb-12 border-b-4 border-slate-900 pb-8">
+          <div class="mb-4">
+            <a href="/blog" class="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors hover:underline decoration-2 decoration-green-500">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to blog
+            </a>
+          </div>
+
+          <h1 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900">{post.data.title}</h1>
+
+          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-600">
+            <time class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {formatDate(post.data.date)}
+            </time>
+            {post.data.readTime && (
+              <span class="pixel-font text-xs text-green-600">{post.data.readTime}</span>
+            )}
+          </div>
+        </header>
+
+        <!-- Article Content -->
+        <div class="prose prose-slate max-w-none mb-12">
+          <Content />
+        </div>
+
+        <!-- Sharing Buttons -->
+        <div class="border-4 border-slate-900 p-6 mb-12 bg-slate-50">
+          <h3 class="pixel-font text-xs mb-4 flex items-center gap-2">
+            <span class="text-green-600">&gt;&gt;</span> Share this post
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white hover:bg-slate-700 transition-colors text-sm border-2 border-slate-900"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              Twitter
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white hover:bg-slate-700 transition-colors text-sm border-2 border-slate-900"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <button
+              onclick="navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.innerHTML = '<svg class=\\'w-4 h-4\\' fill=\\'none\\' stroke=\\'currentColor\\' viewBox=\\'0 0 24 24\\'><path stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' stroke-width=\\'2\\' d=\\'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z\\'></path></svg> Copy link', 2000)"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-slate-900 text-slate-900 hover:bg-slate-100 transition-colors text-sm"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy link
+            </button>
+          </div>
+        </div>
+
+        <!-- Previous/Next Navigation -->
+        <nav class="border-t-4 border-slate-900 pt-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {prevPost ? (
+              <a
+                href={`/blog/${prevPost.slug}`}
+                class="group border-4 border-slate-900 p-6 hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <div class="text-xs pixel-font text-green-600 group-hover:text-green-400 mb-2 flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Previous post
+                </div>
+                <div class="font-semibold">{prevPost.data.title}</div>
+              </a>
+            ) : (
+              <div></div>
+            )}
+            {nextPost && (
+              <a
+                href={`/blog/${nextPost.slug}`}
+                class="group border-4 border-slate-900 p-6 hover:bg-slate-900 hover:text-white transition-colors md:text-right"
+              >
+                <div class="text-xs pixel-font text-green-600 group-hover:text-green-400 mb-2 flex items-center justify-end gap-2">
+                  Next post
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+                <div class="font-semibold">{nextPost.data.title}</div>
+              </a>
+            )}
+          </div>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Prose styles for markdown content */
+  .prose {
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #1e293b;
+  }
+
+  .prose p {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose a {
+    color: #22c55e;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .prose a:hover {
+    color: #16a34a;
+  }
+
+  .prose code {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  .prose pre {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+    border: 4px solid #0f172a;
+  }
+
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #22c55e;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #475569;
+    margin: 1.5rem 0;
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .prose em {
+    font-style: italic;
+  }
+
+  .prose img {
+    border: 4px solid #0f172a;
+    margin: 1.5rem 0;
+  }
+</style>

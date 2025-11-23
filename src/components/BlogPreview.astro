@@ -23,7 +23,7 @@ function formatDate(date: Date) {
       <h2 class="pixel-font text-sm flex items-center gap-2">
         <span class="text-green-600">&gt;&gt;</span> Blog
       </h2>
-      <a href="#blog" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors text-sm hover:underline decoration-2 decoration-green-500">
+      <a href="/blog" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors text-sm hover:underline decoration-2 decoration-green-500">
         View all
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -33,15 +33,17 @@ function formatDate(date: Date) {
 
     <div class="space-y-6">
       {posts.map((post) => (
-        <article class="border-b border-slate-200 pb-6 last:border-b-0 hover:bg-slate-50 -mx-4 px-4 py-2 transition-colors cursor-pointer">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg text-slate-900">{post.data.title}</h3>
-            {post.data.readTime && (
-              <span class="text-xs text-slate-500 pixel-font">{post.data.readTime}</span>
-            )}
-          </div>
-          <p class="text-slate-600 text-sm mb-2">{post.data.excerpt}</p>
-          <time class="text-xs text-slate-500">{formatDate(post.data.date)}</time>
+        <article class="border-b border-slate-200 pb-6 last:border-b-0">
+          <a href={`/blog/${post.slug}`} class="block hover:bg-slate-50 -mx-4 px-4 py-2 transition-colors">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg text-slate-900 hover:text-green-600 transition-colors">{post.data.title}</h3>
+              {post.data.readTime && (
+                <span class="text-xs text-slate-500 pixel-font">{post.data.readTime}</span>
+              )}
+            </div>
+            <p class="text-slate-600 text-sm mb-2">{post.data.excerpt}</p>
+            <time class="text-xs text-slate-500">{formatDate(post.data.date)}</time>
+          </a>
         </article>
       ))}
     </div>

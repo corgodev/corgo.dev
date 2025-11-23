@@ -25,7 +25,7 @@ export const siteConfig = {
   navigation: [
     // { name: 'Games', href: '#games' },
     // { name: 'Projects', href: '#projects' },
-    // { name: 'Blog', href: '#blog' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ],
 };
