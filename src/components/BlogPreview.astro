@@ -1,25 +1,19 @@
 ---
-// Blog preview section
-const posts = [
-  {
-    title: 'Building My First Game in 48 Hours',
-    date: 'Nov 15, 2024',
-    excerpt: 'A deep dive into my experience creating a complete game during a game jam weekend.',
-    readTime: '5 min read',
-  },
-  {
-    title: 'Understanding Game State Management',
-    date: 'Nov 8, 2024',
-    excerpt: 'How to effectively manage game state and avoid common pitfalls in game development.',
-    readTime: '7 min read',
-  },
-  {
-    title: 'Optimizing 2D Sprite Rendering',
-    date: 'Nov 1, 2024',
-    excerpt: 'Techniques for improving performance when rendering thousands of sprites.',
-    readTime: '6 min read',
-  },
-];
+import { getCollection } from 'astro:content';
+
+// Fetch blog posts from content collection, sorted by date (newest first)
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// Helper to format date
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
 ---
 
 <section id="blog" class="py-16 bg-white">
@@ -40,11 +34,13 @@ const posts = [
       {posts.map((post) => (
         <article class="border-b border-slate-200 pb-6 last:border-b-0 hover:bg-slate-50 -mx-4 px-4 py-2 transition-colors cursor-pointer">
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg text-slate-900">{post.title}</h3>
-            <span class="text-xs text-slate-500 pixel-font">{post.readTime}</span>
+            <h3 class="text-lg text-slate-900">{post.data.title}</h3>
+            {post.data.readTime && (
+              <span class="text-xs text-slate-500 pixel-font">{post.data.readTime}</span>
+            )}
           </div>
-          <p class="text-slate-600 text-sm mb-2">{post.excerpt}</p>
-          <time class="text-xs text-slate-500">{post.date}</time>
+          <p class="text-slate-600 text-sm mb-2">{post.data.excerpt}</p>
+          <time class="text-xs text-slate-500">{formatDate(post.data.date)}</time>
         </article>
       ))}
     </div>

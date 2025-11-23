@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { siteConfig } from '../config';
 
 interface Props {
   title?: string;
@@ -7,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Game Developer & Designer',
-  description = 'I create games and interactive experiences. Explore my latest projects, playable demos, and thoughts on game development.'
+  title = siteConfig.title,
+  description = siteConfig.description,
 } = Astro.props;
 ---
 

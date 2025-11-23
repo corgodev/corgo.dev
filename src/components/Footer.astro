@@ -1,5 +1,6 @@
 ---
-// Simple footer component
+import { siteConfig } from '../config';
+
 const currentYear = new Date().getFullYear();
 ---
 
@@ -7,7 +8,7 @@ const currentYear = new Date().getFullYear();
   <div class="container mx-auto px-6 py-8">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="pixel-font text-xs text-green-400">
-        &lt;/&gt; DEV_NAME
+        &lt;/&gt; {siteConfig.name}
       </div>
 
       <div class="text-sm text-center">
@@ -15,10 +16,11 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div class="flex gap-4 text-sm">
-        <a href="#games" class="hover:text-green-400 transition-colors">Games</a>
-        <a href="#projects" class="hover:text-green-400 transition-colors">Projects</a>
-        <a href="#blog" class="hover:text-green-400 transition-colors">Blog</a>
-        <a href="#contact" class="hover:text-green-400 transition-colors">Contact</a>
+        {siteConfig.navigation.map((item) => (
+          <a href={item.href} class="hover:text-green-400 transition-colors">
+            {item.name}
+          </a>
+        ))}
       </div>
     </div>
   </div>

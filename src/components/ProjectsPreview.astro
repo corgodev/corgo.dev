@@ -1,22 +1,10 @@
 ---
-// Projects preview section
-const projects = [
-  {
-    title: 'Custom Game Engine',
-    description: 'A lightweight 2D game engine built with C++ and OpenGL.',
-    tech: ['C++', 'OpenGL', 'SDL2'],
-  },
-  {
-    title: 'Level Editor Tool',
-    description: 'Visual editor for creating and testing game levels in real-time.',
-    tech: ['React', 'WebGL', 'Node.js'],
-  },
-  {
-    title: 'AI Pathfinding System',
-    description: 'Optimized A* pathfinding implementation for large grid-based games.',
-    tech: ['C#', 'Unity', 'A*'],
-  },
-];
+import { getCollection } from 'astro:content';
+
+// Fetch projects from content collection, sorted by date (newest first)
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
 
 <section id="projects" class="py-16 bg-slate-50">
@@ -36,10 +24,10 @@ const projects = [
     <div class="grid md:grid-cols-3 gap-6">
       {projects.map((project) => (
         <div class="bg-white border-4 border-slate-900 pixel-border p-6 hover:border-slate-700 transition-colors cursor-pointer">
-          <h3 class="text-lg mb-3">{project.title}</h3>
-          <p class="text-slate-600 text-sm mb-4">{project.description}</p>
+          <h3 class="text-lg mb-3">{project.data.title}</h3>
+          <p class="text-slate-600 text-sm mb-4">{project.data.description}</p>
           <div class="flex flex-wrap gap-2">
-            {project.tech.map((tech) => (
+            {project.data.tech.map((tech) => (
               <span class="text-xs px-2 py-1 bg-slate-100 text-slate-700 rounded">
                 {tech}
               </span>

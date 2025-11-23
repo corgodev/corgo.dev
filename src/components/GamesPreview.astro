@@ -1,25 +1,10 @@
 ---
-// Games preview section
-const games = [
-  {
-    title: 'Cosmic Runner',
-    description: 'A fast-paced endless runner set in a procedurally generated universe.',
-    status: 'Released',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
-  },
-  {
-    title: 'Puzzle Garden',
-    description: 'Relaxing puzzle game where you grow and arrange a beautiful garden.',
-    status: 'In Development',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
-  },
-  {
-    title: 'Dungeon Architect',
-    description: 'Build and manage your own dungeon in this strategic roguelike.',
-    status: 'Prototype',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
-  },
-];
+import { getCollection } from 'astro:content';
+
+// Fetch games from content collection, sorted by date (newest first)
+const games = (await getCollection('games')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
 
 <section id="games" class="py-16 bg-white">
@@ -41,16 +26,18 @@ const games = [
         <div class="group cursor-pointer">
           <div class="aspect-video bg-slate-200 border-4 border-slate-900 overflow-hidden mb-3 pixel-border">
             <img
-              src={game.image}
-              alt={game.title}
+              src={game.data.image}
+              alt={game.data.title}
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg">{game.title}</h3>
-            <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">{game.status}</span>
+            <h3 class="text-lg">{game.data.title}</h3>
+            <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">
+              {game.data.status}
+            </span>
           </div>
-          <p class="text-slate-600 text-sm">{game.description}</p>
+          <p class="text-slate-600 text-sm">{game.data.description}</p>
         </div>
       ))}
     </div>
