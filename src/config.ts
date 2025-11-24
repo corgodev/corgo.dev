@@ -3,14 +3,14 @@
 export const siteConfig = {
   // Basic site info
   name: 'CorgoDev',
-  title: 'Temporary DevOps - long-term Game Creator',
+  title: 'Hi, I am CorgoDev',
   description: 'I am DevOps by day and try to create games by night. Sometimes I have things to share about both worlds.',
 
   // Hero section
   hero: {
     badge: 'HELLO.EXE',
     title: 'DevOps by Day, Game Creator by Night',
-    description: 'I am DevOps by day and try to create games by night. \nSometimes I have things to share about both worlds.',
+    description: 'Sometimes I have things to share about both worlds.',
     connectLabel: '[CONNECT]',
   },
 
