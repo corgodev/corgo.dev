@@ -8,7 +8,7 @@ export const siteConfig = {
 
   // Hero section
   hero: {
-    badge: '> GAME_DEV.EXE',
+    badge: 'HELLO.EXE',
     title: 'DevOps by Day, Game Creator by Night',
     description: 'I am DevOps by day and try to create games by night. \nSometimes I have things to share about both worlds.',
     connectLabel: '[CONNECT]',

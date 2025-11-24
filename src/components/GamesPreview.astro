@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Card from './Card.astro';
 
 // Fetch games from content collection, sorted by date (newest first)
 // Filter out drafts in production
@@ -11,12 +12,12 @@ const games = (await getCollection('games', ({ data }) => {
 <section id="games" class="py-16 bg-white">
   <div class="container mx-auto px-6">
     <div class="flex items-center justify-between mb-8">
-      <h2 class="pixel-font text-sm flex items-center gap-2">
-        <span class="text-green-600">&gt;&gt;</span> Games
+      <h2 class="pixel-font text-[10px] flex items-center gap-2">
+        <span class="text-green-600">&gt;&gt;</span> GAMES
       </h2>
-      <a href="#games" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors text-sm hover:underline decoration-2 decoration-green-500">
-        View all
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <a href="#games" class="flex items-center gap-2 text-slate-600 hover:text-green-600 transition-colors pixel-font text-[10px] hover:underline decoration-2 decoration-green-500">
+        VIEW_ALL
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
       </a>
@@ -24,22 +25,24 @@ const games = (await getCollection('games', ({ data }) => {
 
     <div class="grid md:grid-cols-3 gap-6">
       {games.map((game) => (
-        <div class="group cursor-pointer">
-          <div class="aspect-video bg-slate-200 border-4 border-slate-900 overflow-hidden mb-3 pixel-border">
+        <Card padding="p-0">
+          <div class="aspect-video bg-slate-200 overflow-hidden">
             <img
               src={game.data.image}
               alt={game.data.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             />
           </div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg">{game.data.title}</h3>
-            <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">
-              {game.data.status}
-            </span>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-semibold">{game.data.title}</h3>
+              <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">
+                {game.data.status}
+              </span>
+            </div>
+            <p class="text-slate-600 text-sm">{game.data.description}</p>
           </div>
-          <p class="text-slate-600 text-sm">{game.data.description}</p>
-        </div>
+        </Card>
       ))}
     </div>
   </div>
