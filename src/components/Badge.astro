@@ -1,0 +1,23 @@
+---
+interface Props {
+  variant?: 'primary' | 'outline' | 'small';
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  class: className = '',
+} = Astro.props;
+
+const variants = {
+  primary: 'inline-block px-3 py-1 bg-green-400 text-slate-900 pixel-font text-[10px] pixel-border border-slate-900',
+  outline: 'inline-block px-2 py-1 bg-green-100 text-slate-900 pixel-font text-[8px] border-2 border-slate-900',
+  small: 'inline-block px-2 py-1 bg-green-400 text-slate-900 pixel-font text-[10px] pixel-border border-slate-900',
+};
+
+const classes = `${variants[variant]} ${className}`;
+---
+
+<span class={classes}>
+  <slot />
+</span>

@@ -1,4 +1,6 @@
 ---
+import Badge from './Badge.astro';
+
 interface Props {
   badge: string;
   title: string;
@@ -25,9 +27,9 @@ const {
 <section class={`bg-purple-50 border-b-4 border-slate-900 ${centered ? 'min-h-[70vh] flex items-center' : ''}`}>
   <div class={`container mx-auto px-6 py-16 ${centered ? 'max-w-3xl' : 'max-w-4xl'}`}>
     <div class={centered ? 'text-center' : ''}>
-      <div class={`inline-block mb-4 px-3 py-1 bg-green-400 text-slate-900 pixel-font text-[10px] pixel-border border-slate-900`}>
+      <Badge class="mb-4">
         <span>&gt;</span> {badge}
-      </div>
+      </Badge>
 
       <h1 class="mb-4 pixel-font text-xl border-t-4 border-b-4 border-slate-900 py-4" set:html={title} />
 

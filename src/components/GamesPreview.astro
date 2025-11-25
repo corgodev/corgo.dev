@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Card from './Card.astro';
+import SectionHeader from './SectionHeader.astro';
+import Badge from './Badge.astro';
 
 // Fetch games from content collection, sorted by date (newest first)
 // Filter out drafts in production
@@ -11,17 +13,7 @@ const games = (await getCollection('games', ({ data }) => {
 
 <section id="games" class="py-16 bg-white">
   <div class="container mx-auto px-6">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="pixel-font text-[10px] flex items-center gap-2">
-        <span class="text-green-600">&gt;&gt;</span> GAMES
-      </h2>
-      <a href="#games" class="flex items-center gap-2 text-slate-600 hover:text-green-600 transition-colors pixel-font text-[10px] hover:underline decoration-2 decoration-green-500">
-        VIEW_ALL
-        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-        </svg>
-      </a>
-    </div>
+    <SectionHeader title="GAMES" viewAllHref="#games" />
 
     <div class="grid md:grid-cols-3 gap-6">
       {games.map((game) => (
@@ -36,9 +28,9 @@ const games = (await getCollection('games', ({ data }) => {
           <div class="p-6">
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-lg font-semibold">{game.data.title}</h3>
-              <span class="text-[10px] px-2 py-1 bg-green-400 text-slate-900 pixel-font pixel-border border-slate-900">
+              <Badge variant="small">
                 {game.data.status}
-              </span>
+              </Badge>
             </div>
             <p class="text-slate-600 text-sm">{game.data.description}</p>
           </div>

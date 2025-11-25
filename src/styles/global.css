@@ -17,3 +17,14 @@
     0 2px 0 0 currentColor,
     -2px 0 0 0 currentColor;
 }
+
+/* Utility classes for extreme duplication (21+ occurrences) */
+@layer utilities {
+  .text-pixel-xs {
+    @apply pixel-font text-[10px];
+  }
+
+  .flex-center-gap-2 {
+    @apply flex items-center gap-2;
+  }
+}
