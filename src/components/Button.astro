@@ -4,6 +4,7 @@ interface Props {
   href?: string;
   type?: 'button' | 'submit';
   class?: string;
+  onclick?: string;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   href,
   type = 'button',
   class: className = '',
+  onclick,
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center gap-2 px-4 py-2 transition-colors pixel-font text-[10px] border-2 border-slate-900';
@@ -28,7 +30,7 @@ const classes = `${baseClasses} ${variants[variant]} ${className}`;
     <slot />
   </a>
 ) : (
-  <button type={type} class={classes}>
+  <button type={type} class={classes} onclick={onclick}>
     <slot />
   </button>
 )}
