@@ -130,7 +130,7 @@ Astro's built-in content collections with Zod schema validation:
 {
   title: string
   date: Date
-  excerpt: string
+  description: string
   readTime?: string
   draft: boolean (default: false)
 }

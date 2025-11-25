@@ -1,7 +1,7 @@
 ---
 title: This is a Work in Progress Post
 date: 2024-11-23
-excerpt: This post is still being written and won't appear in production.
+description: This post is still being written and won't appear in production.
 readTime: 3 min read
 draft: true
 ---
