@@ -30,6 +30,7 @@ const blogCollection = defineCollection({
     date: z.date(),
     description: z.string(),
     readTime: z.string().optional(),
+    song: z.string().url().optional(),
     draft: z.boolean().default(false),
   }),
 });
