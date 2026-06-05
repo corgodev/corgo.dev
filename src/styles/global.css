@@ -18,6 +18,43 @@
     -2px 0 0 0 currentColor;
 }
 
+/* Original draft collapsible */
+details.original-draft {
+  border: 4px dashed #94a3b8;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background-color: #f8fafc;
+}
+
+details.original-draft summary {
+  font-size: 10px;
+  color: #64748b;
+  cursor: pointer;
+  list-style: none;
+  letter-spacing: 0.05em;
+}
+
+details.original-draft summary::-webkit-details-marker {
+  display: none;
+}
+
+details.original-draft summary::before {
+  content: '>> ';
+  color: #22c55e;
+}
+
+details.original-draft[open] summary {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+details.original-draft p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
 /* Utility classes for extreme duplication (21+ occurrences) */
 @layer utilities {
   .text-pixel-xs {
