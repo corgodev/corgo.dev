@@ -1,9 +1,18 @@
 ---
-title: Let noone fool you - creating is hard
+title: Brainless - word of the year for my 2026
 date: 2026-06-05
-description: And that's why this website was empty for so long
+description: Sounds much more fun that what I had in mind
 draft: false
 ---
+
+
+Creating stuff is hard. Creating stuff that people enjoy is even harder. All the thinking, doing, polishing, editing, backtracking, deleting, redoing, ugh...
+
+What If I just... did without thinking? Would it cause me to make only shit or to actually cause me to do fun stuff? Hoping for the second one tbh.
+Especially since I tend to overthink anyway so me trying to conciously steer in the other direction will probably make me just go in the middle. That's what you call knowing yourself.
+
+On that matter, below is what I did publish first. I decided to leave it since it's also true and mine but kinda over the top and probably not how I should leave if I want my life to be slightly more fun: 
+
 
 What do I want to say? How do I want it to be perceived? How do I ensure that people see what I share?
 
